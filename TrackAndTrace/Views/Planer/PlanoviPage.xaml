@@ -1,0 +1,86 @@
+﻿<Page
+    x:Class="TrackAndTrace.Views.Planer.PlanoviPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrackAndTrace.Views.Planer"
+    xmlns:converters="using:TrackAndTrace.Helpers"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:sys="using:System"
+    xmlns:models="using:DbProvider.Model"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <converters:DateToStringConverter x:Key="DateToStringConverter"/>
+    </Page.Resources>
+    <Grid>
+        <RelativePanel>
+            <TextBlock x:Name="PlanoviTitle" Style="{StaticResource SubheaderTextBlockStyle}" Text="Planovi" Margin="20,0" />
+            <CommandBar x:Name="commandBar"
+                        HorizontalAlignment="Stretch"
+                        IsOpen="False"
+                        Background="Transparent"
+                        RelativePanel.RightOf="PlanoviTitle"
+                        DefaultLabelPosition="Right">
+                <AppBarButton
+                    x:Name="abrNovi"
+                    Icon="Add"
+                    Label="Novi"
+                    Click="abrNovi_Click"/>
+                <AppBarButton
+                    x:Name="abrIzmjena"
+                    Icon="Edit"
+                    Label="Izmjeni"
+                    IsEnabled="{x:Bind converters:Converters.IsNotNull(ViewModel.OdabraniPlan), Mode=OneWay}"
+                    Click="abrIzmjena_Click"/>
+                <AppBarSeparator/>
+                <AppBarButton
+                    x:Name="abrUkloni"
+                    Icon="Delete"
+                    Label="Ukloni"
+                    IsEnabled="{x:Bind converters:Converters.IsNotNull(ViewModel.OdabraniPlan), Mode=OneWay}"
+                    ClickMode="Press"
+                    Click="{x:Bind ViewModel.UkloniPlanAsync}"/>
+            </CommandBar>
+            <controls:DataGrid 
+                x:Name="dataGridPlanovi" 
+                RelativePanel.Below="PlanoviTitle"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                ItemsSource="{x:Bind ViewModel.ListaPlanova, Mode=OneWay}" 
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch"                   
+                CanUserReorderColumns="False" CanUserResizeColumns="False"
+                BorderThickness="0"
+                Margin="0,10,0,0"
+                GridLinesVisibility="All"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                RowDetailsVisibilityMode="Collapsed"
+                LoadingRow="dataGridPlanovi_LoadingRow"
+                SelectedItem="{x:Bind ViewModel.OdabraniPlan, Mode=TwoWay}"
+                SelectionMode="Extended">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Header="Broj plana" Binding="{Binding Id}" />
+                    <controls:DataGridTextColumn Header="Kupac" Binding="{Binding Kupac}" />
+                    <controls:DataGridTextColumn Header="Proizvod"  Binding="{Binding Proizvod}" />
+                    <controls:DataGridTextColumn Header="Planer" Binding="{Binding Planer}"/>
+                    <controls:DataGridTextColumn Header="Datum izrade" Binding="{Binding DatumIzradePlana, Converter={StaticResource DateToStringConverter}}" />
+                    <controls:DataGridTextColumn Header="Datum završetka" Binding="{Binding DatumZavrsetkaPlana, Converter={StaticResource DateToStringConverter}}" />
+                    <controls:DataGridTextColumn Header="Status" Binding="{Binding JeAktivan}" />
+                    <controls:DataGridTextColumn Header="Kolicina"  Binding="{Binding Kolicina}" />
+                    <controls:DataGridTextColumn Header="Jedinačnih u omot" Binding="{Binding JedinacnihUOmot}" />
+                    <controls:DataGridTextColumn Header="Omotnih u paket" Binding="{Binding OmotnihUPaket}" />
+                    <controls:DataGridTextColumn Header="Paketa na paletu" Binding="{Binding PaketaNaPaletu}" />
+                    <controls:DataGridTextColumn Header="Ukupno omotnih" Binding="{Binding UkupnoOmotnih}" />
+                    <controls:DataGridTextColumn Header="Ukupno paketa" Binding="{Binding UkupnoPaketa}" />
+                    <controls:DataGridTextColumn Header="Ukupno paleta" Binding="{Binding UkupnoPaleta}" />
+                </controls:DataGrid.Columns>
+            </controls:DataGrid>
+            <ProgressRing x:Name="progressRing" Width="64" Height="64" 
+                          IsActive="{x:Bind ViewModel.UcitavaSe, Mode=OneWay}" 
+                          RelativePanel.AlignHorizontalCenterWithPanel="True"
+                          RelativePanel.AlignVerticalCenterWithPanel="True"/>
+        </RelativePanel>
+    </Grid>
+</Page>

@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="TrackAndTrace.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:modeli="using:DbProvider.Model"
+    xmlns:local="using:TrackAndTrace"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <RelativePanel Margin="0,0,0,200">
+            <StackPanel x:Name="LoginTitle" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,20">
+                <TextBlock Text="Prijava na sistem" Style="{StaticResource TitleTextBlockStyle}" />
+            </StackPanel>
+            <StackPanel x:Name="UsernameSP" RelativePanel.Below="LoginTitle" RelativePanel.AlignHorizontalCenterWith="LoginTitle" Margin="0,10">
+                <TextBox x:Name="tbUsername" Header="Korisnik"  Width="200"/>
+            </StackPanel>
+            <StackPanel x:Name="PasswordSP" RelativePanel.Below="UsernameSP" RelativePanel.AlignHorizontalCenterWith="LoginTitle">
+                <PasswordBox x:Name="tbPassword" Header="Lozinka" Width="200" />
+            </StackPanel>
+            <StackPanel x:Name="ValidatorSP" RelativePanel.Below="PasswordSP" RelativePanel.AlignRightWith="PasswordSP" Margin="0,20">
+                <Button x:Name="btnValidate" Content="Potvrdi" Click="BtnValidate_Click" />
+            </StackPanel>
+        </RelativePanel>
+
+    </Grid>
+</Page>

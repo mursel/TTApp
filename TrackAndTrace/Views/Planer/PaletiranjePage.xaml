@@ -1,0 +1,44 @@
+﻿<Page
+    x:Class="TrackAndTrace.Views.Planer.PaletiranjePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrackAndTrace.Views.Planer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:converters="using:TrackAndTrace.Helpers"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center" HorizontalAlignment="Left" Text="Paletiranje" Margin="20,10" />
+        <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cbPlanovi" Header="Plan pakovanja:" Width="250" DisplayMemberPath="NazivPlana" Margin="20,10"
+                    SelectedItem="{x:Bind AppViewModel.OdabraniPlan, Mode=TwoWay}" SelectionChanged="cbPlanovi_SelectionChanged"/>
+        <RelativePanel Grid.Row="2">
+            <Button Content="Dodaj paletu" Grid.Row="2" Grid.Column="1" Margin="20,10" Click="Button_Click" />
+        </RelativePanel>
+        <RelativePanel Grid.Row="3" Margin="20,0">
+            <TextBlock x:Name="txtNazivPaketi" Text="Paketi" Margin="0,10" />
+            <ListView x:Name="lvPaketi" Width="350" Height="450" DisplayMemberPath="SerijskiBroj" SelectionMode="Multiple" RelativePanel.Below="txtNazivPaketi"/>
+            <Button x:Name="btnAddPacket" Click="btnAddPacket_Click" RelativePanel.RightOf="lvPaketi" RelativePanel.AlignVerticalCenterWith="lvPaketi" Margin="10,10">
+                <SymbolIcon Symbol="Forward" />
+            </Button>
+            <Button x:Name="btnRemovePacket" Click="btnRemovePacket_Click" RelativePanel.RightOf="lvPaketi" RelativePanel.Below="btnAddPacket" Margin="10,10">
+                <SymbolIcon Symbol="Back" />
+            </Button>            
+            <TreeView x:Name="tvPalete" Width="350" Height="Auto" RelativePanel.RightOf="btnAddPacket" Margin="10,40" SelectionMode="Multiple" />
+            <TextBlock x:Name="txtNazivPalete" Text="Palete" RelativePanel.AlignLeftWith="tvPalete"  Margin="0,10"/>
+        </RelativePanel>
+    </Grid>
+</Page>

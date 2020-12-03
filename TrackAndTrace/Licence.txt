@@ -1,0 +1,15 @@
+﻿
+
+	Taskbar icon by Chanut is Industries [https://www.iconfinder.com/Chanut-is] - https://creativecommons.org/licenses/by/3.0/
+
+	FastMember.Signed by Marc Gravell [https://github.com/mgravell/fast-member] - http://www.apache.org/licenses/LICENSE-2.0
+
+	Syncfusion ReportViewer by Syncfusion Inc [https://www.syncfusion.com/] - https://www.syncfusion.com/products/communitylicense
+
+	Dapper.Contrib by Sam Saffron, Johan Danforth [https://github.com/StackExchange/Dapper/tree/master/Dapper.Contrib] - http://www.apache.org/licenses/LICENSE-2.0
+
+	ZXing.Net by Michael Jahn [https://github.com/micjahn/ZXing.Net/] - http://www.apache.org/licenses/LICENSE-2.0
+
+	Microsoft Toolkit for UWP by Microsoft.Toolkit Team [https://github.com/windows-toolkit/WindowsCommunityToolkit] - https://github.com/windows-toolkit/WindowsCommunityToolkit/blob/master/license.md
+
+	Microsoft.NETCore.UniversalWindowsPlatform by Microsoft [https://github.com/Microsoft/dotnet/blob/master/releases/UWP/README.md] - https://github.com/dotnet/core-setup/blob/master/LICENSE.TXT

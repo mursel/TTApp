@@ -1,0 +1,67 @@
+﻿<Page
+    x:Class="TrackAndTrace.Views.Admin.AdminMainPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrackAndTrace.Views.Admin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <NavigationView 
+            x:Name="GlavniNavMeni"
+            Grid.Column="1"
+            IsSettingsVisible="False"
+            AlwaysShowHeader="False"
+            IsBackEnabled="{x:Bind adminContent.CanGoBack, Mode=OneWay}"
+            SelectionChanged="GlavniNavMeni_SelectionChanged"
+            ItemInvoked="GlavniNavMeni_ItemInvoked"
+            CompactModeThresholdWidth="0"
+            ExpandedModeThresholdWidth="1920"       
+            OpenPaneLength="160"
+            Loaded="GlavniNavMeni_Loaded"
+            IsEnabled="{x:Bind ViewModel.IsMenuEnabled, Mode=OneWay}"
+            BackRequested="GlavniNavMeni_BackRequested">
+            <NavigationView.MenuItems>
+                <!--<NavigationViewItem x:Name="HomeMenuItem" Content="Početna" Tag="status">
+                    <NavigationViewItem.Icon>
+                        <SymbolIcon Symbol="Home"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>-->
+                <NavigationViewItemSeparator />
+                <NavigationViewItem x:Name="UposleniciMenuItem" Content="Uposlenici" Tag="UposleniciPage">
+                    <NavigationViewItem.Icon>
+                        <SymbolIcon Symbol="People"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Name="KupciMenuItem" Content="Kupci" Tag="KupciPage">
+                    <NavigationViewItem.Icon>
+                        <SymbolIcon Symbol="Contact"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Name="ProizvodiMenuItem" Content="Proizvodi" Tag="ProizvodiPage">
+                    <NavigationViewItem.Icon>
+                        <SymbolIcon Symbol="Document"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <Frame x:Name="adminContent"
+                   Navigating="adminContent_Navigating">                
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition>
+                            <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                <EntranceNavigationTransitionInfo/>
+                            </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                        </NavigationThemeTransition>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </NavigationView>
+    </Grid>
+</Page>

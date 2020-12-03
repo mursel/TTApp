@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- TTE standard schema for shipment data -->
+<!-- Version: 1.0 $Rev: 2700 $-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+  <xs:group name="shipmentTypeGroup">
+    <xs:sequence>
+      <xs:element name="MessageID"                    type="xs:string" />
+      <xs:element name="MessageTime"                  type="xs:dateTime" />
+      <xs:element name="MessageType"                  type="xs:string" minOccurs="0" maxOccurs="1">
+         <xs:annotation>
+           <xs:documentation>
+             Type of operation for which is XML file used. If not used then default value is "Shipment". 
+           </xs:documentation>
+         </xs:annotation>
+      </xs:element>
+      <xs:element name="ShipmentNumber"               type="xs:string"       minOccurs="0" />
+      <xs:element name="DeliveryNoteNumber"           type="xs:string" />
+      <xs:element name="PurchaseOrderNumber"          type="xs:string"       minOccurs="0"/>
+      <xs:element name="ExpectedDeliveryDate"         type="xs:date"         minOccurs="0" />
+      <xs:element name="Sender"                       type="addressType" />
+      <xs:element name="Shipper"                      type="addressType"     minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="Receiver"                     type="addressType" />
+      <xs:element name="DeliveryComment"              type="xs:string"       minOccurs="0" />
+    </xs:sequence>
+  </xs:group>
+  <!-- string type with length 30 -->
+  <xs:simpleType name="string30">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+
+ <xs:simpleType name="decimal6">
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="6"/>
+      <xs:minExclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="isoUnitOfMeasureType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BG"/>
+      <xs:enumeration value="BB"/>
+      <xs:enumeration value="BX"/>
+      <xs:enumeration value="C62"/>
+      <xs:enumeration value="CN"/>
+      <xs:enumeration value="CMT"/>
+      <xs:enumeration value="CR"/>
+      <xs:enumeration value="CS"/>
+      <xs:enumeration value="CT"/>
+      <xs:enumeration value="DR"/>
+      <xs:enumeration value="EA"/>
+      <xs:enumeration value="GRM"/>
+      <xs:enumeration value="KGM"/>
+      <xs:enumeration value="KMT"/>
+      <xs:enumeration value="LTR"/>
+      <xs:enumeration value="MTR"/>
+      <xs:enumeration value="PA"/>
+      <xs:enumeration value="PCE"/>
+      <xs:enumeration value="PF"/>
+      <xs:enumeration value="PK"/>
+      <xs:enumeration value="RL"/>
+      <xs:enumeration value="RO"/>
+      <xs:enumeration value="SO"/>
+      <xs:enumeration value="TNE"/>
+      <xs:enumeration value="UNI"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- list of summary items -->
+  <xs:complexType name="summaryItemsType">
+    <xs:sequence>
+      <xs:element name="SummaryItem" type="summaryItemType" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- list of items -->
+  <xs:complexType name="itemsType">
+    <xs:sequence>
+      <xs:element name="Item" type="itemType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- list of units -->
+  <xs:complexType name="unitsType">
+    <xs:sequence>
+      <xs:element name="Unit" type="unitType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- item base -->
+  <xs:group name="itemBaseType">
+    <xs:sequence>
+      <xs:element name="ProducerProductCode" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Product Code: AI(240)
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="string30"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="ProducerProductName" minOccurs="0" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            Readable and comprehensive product name
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PurchaseOrderLineNumber" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Defines the index of the line in the order position list
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="string30"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="DeliveryNoteLineNumber" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Defines the index of the line in the delivery note position list
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="string30"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="ItemQuantity" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Total count of items contained in a logistic unit: AI(30)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:positiveInteger">
+            <xs:maxInclusive value="99999999"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="CountOfTradeUnits" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Count of sub-units contained in a logistic unit: AI(37)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:positiveInteger">
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="CustomerProductCode" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation> Customer Material Number</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="CustomerProductName" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation> Customer Material Number</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>      
+      <xs:element name="PackagingLevel" type="levelCodeType" minOccurs="0" >
+        <xs:annotation>
+          <xs:documentation>Packing Level</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BatchNumber" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation> BatchNumber: AI(10) </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="20" />            
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="ProductionDate" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Product Date (YYYY-MM-DD) : AI(11)
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:date">
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element> 
+      <xs:element name="NEW" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation> Net Explosive Weight [kg]: AI(310n)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="decimal6"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Length" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation> Product Length/1st Dimension, in meters: AI(311n)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="decimal6"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Width" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation> Product Width/Diameter/2nd Dimension, in meters: AI(312n).</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="decimal6"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="DepthThickness" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation> Product Depth/Thickness/Height/3rd Dimension, in meters: AI(313n).</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="decimal6"/>
+        </xs:simpleType>
+      </xs:element>
+
+      <xs:element name="Area" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation> Product Area, in square meters: AI(314n)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="decimal6"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="NetVolumeLitre" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation> Product Net Volume, in litres: AI(315n)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="decimal6"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="NetVolumeCubic" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation> Product Net Volume, in cubic meters: AI(316n)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="decimal6"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="GrossWeight" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation> Gross weight - Kgs: AI(330n)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="decimal6"/>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="ItemComment" minOccurs="0" type="xs:string" />        
+      <xs:element name="UnitOfMeasure" minOccurs="0" type="isoUnitOfMeasureType"/>
+      <xs:element name="UNNumber" minOccurs="0" type="xs:string"/>
+      <xs:element name="TunnelCode" minOccurs="0" type="xs:string"/>
+      <xs:element name="RiskIdentification" minOccurs="0" type="xs:string"/>
+      <xs:element name="GTIN" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{14}|[0-9]{13}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="BoxNumber" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>old style box number</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{6}"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+
+  <!-- a summary item -->
+  <xs:complexType name="summaryItemType">
+    <xs:sequence>
+      <xs:group ref="itemBaseType"/>
+    </xs:sequence>
+    <xs:attribute name="SID" type="xs:ID" use="required" />
+    <xs:attribute name="PSN" type="companyCodeType" use="required" />
+  </xs:complexType>
+
+  <!-- unit type for tree representation of packing structure -->
+  <xs:complexType name="unitType">
+    <xs:sequence>
+      <xs:element name="SSCC" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation> SSCC-Code for use with pallets.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:length value="18"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:group ref="itemBaseType"/>
+      <xs:element name="Items" type="itemsType" minOccurs="0" />
+      <xs:element name="Units" type="unitsType" minOccurs="0" />
+    </xs:sequence>
+    <xs:attribute name="SID" type="xs:IDREF" use="optional" />
+    <xs:attribute name="UID" type="string30" use="required"/>
+    <xs:attribute name="PSN" type="companyCodeType" use="required" />
+  </xs:complexType>
+
+  <!-- item type -->
+  <xs:complexType name="itemType">
+    <xs:sequence>
+      <xs:group ref="itemBaseType"/>
+    </xs:sequence>
+    <xs:attribute name="SID" type="xs:IDREF" use="optional" />
+    <xs:attribute name="UID" type="string30" use="required"/>
+    <xs:attribute name="PSN" type="companyCodeType" use="required" />
+  </xs:complexType>
+
+
+  <xs:simpleType name="companyCodeType">
+    <xs:annotation>
+      <xs:documentation> Country and Production site: AI(90) </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z]{2}([0-9]{3}|[A-Z]{3})" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="levelCodeType">
+    <xs:annotation>
+      <xs:documentation> packaging level: AI(20)</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:length value="2" />
+      <xs:enumeration value="00" />
+      <xs:enumeration value="01" />
+      <xs:enumeration value="02" />
+      <xs:enumeration value="03" />
+      <xs:enumeration value="04" />
+      <xs:enumeration value="05" />
+      <xs:enumeration value="09" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="addressType">
+    <xs:sequence>
+      <xs:element name="Code"           type="xs:string" /> 
+      <xs:element name="Name"           type="xs:string" />
+      <xs:element name="Name2"          type="xs:string" minOccurs="0"/>
+      <xs:element name="AddressCode"    type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Unique code of subject address for matching in systems 
+            (for unique identification if subject has several different addresses). 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Address"        type="xs:string" minOccurs="0"/>
+      <xs:element name="Address2"       type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Additional space for Address. 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Zipcode"  type="xs:string"      minOccurs="0"/>
+      <xs:element name="City"     type="xs:string"      minOccurs="0"/>
+      <xs:element name="Country"  type="xs:string"      minOccurs="0"/>
+      <!-- county or country code (de, au, es) -->
+      <xs:element name="State"    type="xs:string"      minOccurs="0"/>
+      <!--// county (Saxony (SA), California (CA), ..)-->
+    </xs:sequence>
+    <xs:attribute name="Order" type="xs:int"/>
+  </xs:complexType>
+
+  <xs:complexType name="shipmentType">
+    <xs:annotation>
+      <xs:documentation>
+        Main root element. Describes the Packing List.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:group ref="shipmentTypeGroup"/>
+      <xs:element name="SummaryItems" type="summaryItemsType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="Units" type="unitsType" minOccurs="0" maxOccurs="1">
+        <xs:unique name="uniqueUnitNumberConstraint">
+          <xs:selector xpath=".//Item | .//Unit"/>
+          <xs:field xpath="@UID"/>
+          <xs:field xpath="@PSN"/>
+        </xs:unique>
+      </xs:element>
+      <xs:element name="Items" type="itemsType" minOccurs="0" maxOccurs="1"/>     
+    </xs:sequence>
+    <xs:attribute name="FileVersion" type="xs:decimal" use="required" fixed="1.0" />
+    <xs:attribute name="FileType" use="required" type="xs:string" fixed="FEEM-Std" />
+    <xs:attribute name="FileCreator" type="xs:string" use="required" />
+    <xs:attribute name="Hash" type="xs:string" use="optional"/>
+  </xs:complexType>
+  
+  <xs:element name="Shipment" type="shipmentType" />
+  
+</xs:schema>

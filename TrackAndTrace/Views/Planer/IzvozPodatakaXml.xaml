@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="TrackAndTrace.Views.Planer.IzvozPodatakaXml"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrackAndTrace.Views.Planer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <RelativePanel>
+            <TextBlock x:Name="JedTitle" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center" Text="Izvoz podataka" Margin="20,0" />
+            <ComboBox x:Name="cbPlanovi" Header="Plan pakovanja" Width="250" DisplayMemberPath="NazivPlana" Margin="20,10" RelativePanel.Below="JedTitle"
+                    SelectedItem="{x:Bind AppViewModel.OdabraniPlan, Mode=TwoWay}" SelectionChanged="cbPlanovi_SelectionChanged"/>
+            <TextBlock x:Name="txtJedinacne" RelativePanel.Below="cbPlanovi" Text="Jedinačne" Margin="20,10"/>
+            <ListBox x:Name="lbJedinacne" Width="300" RelativePanel.Below="txtJedinacne" DisplayMemberPath="SerijskiBroj" Margin="20,10" Height="250" BorderBrush="Black" BorderThickness="1" />
+            <TextBlock x:Name="txtOmotne" RelativePanel.RightOf="lbJedinacne" RelativePanel.Below="cbPlanovi" Text="Omotne" Margin="20,10"/>
+            <ListBox x:Name="lbOmotne" Width="300" RelativePanel.RightOf="lbJedinacne" RelativePanel.Below="txtOmotne" DisplayMemberPath="SerijskiBroj" Margin="20,10"  Height="250" BorderBrush="Black" BorderThickness="1"/>
+            <TextBlock x:Name="txtPaketne" RelativePanel.Below="lbJedinacne" Text="Paketne" Margin="20,10"/>
+            <ListBox x:Name="lbPaketne" Width="300" RelativePanel.Below="txtPaketne" DisplayMemberPath="SerijskiBroj" Margin="20,10"  Height="250" BorderBrush="Black" BorderThickness="1"/>
+            <TextBlock x:Name="txtPaletne" RelativePanel.Below="lbOmotne" RelativePanel.RightOf="lbPaketne" Text="Paletne" Margin="20,10"/>
+            <ListBox x:Name="lbPaletne" Width="300" RelativePanel.RightOf="lbPaketne" RelativePanel.Below="txtPaletne" DisplayMemberPath="SerijskiBroj" Margin="20,10"  Height="250" BorderBrush="Black" BorderThickness="1"/>
+            <Button x:Name="btnExport" Content="Snimi" RelativePanel.Below="lbPaketne"  Margin="20,10" Click="btnExport_Click"/>
+            <ProgressRing IsActive="{x:Bind AppViewModel.UcitavaSe, Mode=OneWay}"
+                      RelativePanel.AlignHorizontalCenterWithPanel="True"
+                      RelativePanel.AlignVerticalCenterWithPanel="True" Width="64" Height="64"/>
+        </RelativePanel>
+    </Grid>
+</Page>

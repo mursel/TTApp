@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="TrackAndTrace.Views.Scan.OmotnePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TrackAndTrace.Views.Scan"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:Reports ="using:Syncfusion.UI.Xaml.Reports"
+    xmlns:convs="using:TrackAndTrace.Helpers"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <RelativePanel>
+            <TextBlock x:Name="OmoTitle" Style="{StaticResource TitleTextBlockStyle}" VerticalAlignment="Center" Text="Omotne etikete" Margin="20,0" />
+            <ComboBox x:Name="cbPlanovi" Header="Plan pakovanja" Width="250" DisplayMemberPath="NazivPlana" Margin="20,10" RelativePanel.Below="OmoTitle"
+                    SelectedItem="{x:Bind AppViewModel.OdabraniPlan, Mode=TwoWay}" SelectionChanged="cbPlanovi_SelectionChanged"/>
+            <TextBox x:Name="txtSerial" IsEnabled="False" RelativePanel.Below="cbPlanovi" PlaceholderText="Kliknuti ovdje prije skeniranja" Margin="20,10" Width="250" KeyDown="txtSerial_KeyDown" />
+            <ListView x:Name="lvSerials" Width="350" Height="450" DisplayMemberPath="SerijskiBroj" SelectionMode="Single" RelativePanel.Below="txtSerial" Margin="20,10" BorderBrush="Blue" BorderThickness="1"/>
+            <Reports:SfReportViewer x:Name="sfReport" Width="800" Height="300"  RelativePanel.Below="txtSerial" RelativePanel.RightOf="lvSerials" />
+            <ProgressRing x:Name="progressRing" Width="64" Height="64" 
+                          IsActive="{x:Bind AppViewModel.UcitavaSe, Mode=OneWay}" 
+                          RelativePanel.AlignHorizontalCenterWithPanel="True"
+                          RelativePanel.AlignVerticalCenterWithPanel="True"/>            
+        </RelativePanel>
+    </Grid>
+</Page>
